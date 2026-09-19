@@ -1,0 +1,172 @@
+---
+title: "CV"
+subtitle: "Machine learning & AI solutions engineer — London, UK"
+toc: true
+toc-depth: 2
+---
+
+[LinkedIn](https://www.linkedin.com/in/roshbeed) ·
+[GitHub](https://github.com/RoshBeed) ·
+[Book 15 minutes](https://cal.com/rosh-beed/15min)
+
+## Summary
+
+I help customers work out what's actually possible, and what's actually feasible,
+then build a small proof of concept that shows them it works. That's the part of
+the job I like most, and it's taken me somewhere new every few months for close to
+a decade.
+
+The environments are usually the awkward kind. Kubernetes onto a submarine,
+air-gapped because there's no bandwidth underwater. A border control platform I
+supported from a secure room. Gene therapy pipelines demoed straight back to the
+customer that cut projected analysis costs by 80%. Lately it's machine learning: a
+multi-agent platform for drug discovery, and fine-tuning Google's MedGemma to
+generate radiology reports from breast scans it had never seen.
+
+I know these systems well enough to build the thing under pressure and explain it
+at any level, from the code up to the business case. SC cleared, 12 AWS
+certifications, London.
+
+## Experience
+
+### Machine Learning Consultant — Independent {#consulting}
+
+*July 2025 – present*
+
+ML engineering and advisory for early-stage startups: multi-agent systems, LLM
+tooling, and MLOps.
+
+### Machine Learning Engineer — BioX AI
+
+*July 2025 – December 2025 · London*
+
+- **Multi-agent drug discovery platform.** Deployed multi-agent workflows on Vertex
+  AI Agent Engine using Google ADK, with A2A for inter-agent communication.
+- **Agent tooling.** Built agents for literature review, patent drafting and
+  experiment planning; integrated MCP tools for real-time literature and patent
+  search.
+- **Vertex AI training.** Fine-tuned Google's MedGemma on DICOM breast scans to
+  generate radiology reports, evaluated against BI-RADS scores as ground truth.
+- **MLOps & infrastructure.** Provisioned reproducible GCP environments with
+  Terraform, set up cost tracking, and monitored agent runs with Agent Engine
+  tracing and logs.
+
+### Machine Learning Engineer — The Machine Learning Institute
+
+*May 2025 – July 2025 · London*
+
+Accepted into the ML Institute AI Residency — chosen from 800+ applicants for a
+fellowship fully funded by the UK government, focused on moving applied deep
+learning from research into production.
+
+- **RLHF with PPO.** End-to-end RLHF pipeline for summarisation: reward model
+  training, PPO from scratch (token-level KL divergence, reward shaping, advantage
+  estimation), and parameter-efficient fine-tuning with LoRA/adapters.
+- **Whisper emotion detection.** Fine-tuned OpenAI Whisper to classify emotions and
+  environmental sounds, using token-based training that mixed pre-training and new
+  data to mitigate catastrophic forgetting.
+- **Vision transformer captioning.** Built a synthetic dataset and trained a
+  ViT + transformer decoder for image captioning with CLIP-style loss.
+- **Dual-encoder retrieval.** Trained dual- and cross-encoder architectures with
+  contrastive loss for semantic document retrieval; deployed with a Redis vector
+  DB for ANN search.
+- **Foundational work.** Implemented Word2Vec and custom transformers from scratch.
+
+### Senior Consultant, Solutions Architect — HeleCloud (a SoftwareOne company)
+
+*April 2022 – June 2024*
+
+- Deployed a Terraform-based AWS Landing Zone into customer environments,
+  provisioning a full multi-account organisation from a single root account — with
+  an account vending machine for ephemeral developer environments, centralised
+  logging and billing, and isolation that contained the blast radius of any one
+  project.
+- Led 10+ AWS Well-Architected Reviews end to end, running multi-day workshops with
+  up to 12 stakeholders across security, operations, infrastructure and finance,
+  then translating findings into prioritised remediation plans that cut high-risk
+  issues by 45% — the threshold that unlocked AWS funding for the remediation work.
+- Migration specialist for 10+ AWS Optimisation and Licensing Assessments. Deployed
+  data collection tooling across mixed on-premise estates (Hyper-V, vSphere,
+  VMware), connecting at hypervisor or VM level over WMI, SNMP or T-SQL depending on
+  customer access constraints, with workload data encrypted locally before syncing
+  to S3.
+- Analysed 30 days of collected workload data to produce rightsizing and licensing
+  migration recommendations, reducing TCO by 36%.
+- Built cross-account AWS Security Hub aggregation with filtered critical alerts and
+  Microsoft Teams integration.
+
+### Senior Consultant, Platform Engineer — Automation Logic
+
+*May 2021 – April 2022 · London*
+
+- Built a digital twin of an air-gapped environment in AWS with Terraform and CI/CD
+  in ~10 minutes, and developed an offline Kubernetes deployment solution with
+  Ansible + Nexus for air-gapped defence infrastructure.
+- Provided production support, on-site in a secure room, during deployment of a
+  4,000+ node Kubernetes platform (Europe's largest at the time) — monitoring pods
+  to ensure zero downtime for an automated border control system.
+- Built a workforce analytics dashboard on GCP (BigQuery + Data Studio) to analyse
+  consultant–project alignment and reduce turnover.
+
+### Consultant, DevOps Engineer — PA Consulting
+
+*December 2019 – May 2021*
+
+- Built a real-time data ingest pipeline with AWS Kinesis feeding an S3 data lake;
+  implemented fine-grained access controls and exposed curated datasets to
+  downstream partners via API Gateway + Lambda.
+- Integrated the S3 data lake with SageMaker so AI/ML teams could run experiments on
+  gene therapy data, cutting projected analysis costs by 80%.
+- Created the Git repo and Terraform CI/CD pipelines provisioning and deploying into
+  isolated dev/test/prod environments.
+
+### Cloud Engineer, AWS re/Start — Amazon Web Services
+
+*July 2019 – October 2019 · London*
+
+Full-time cloud engineering training: hands-on work with Lambda, DynamoDB and API
+Gateway alongside project management and customer service. The capstone project was
+a serverless website — www.roshbeed.com, the ancestor of this one — built on
+CodeBuild, CodeCommit and S3, with build time optimised to 30 seconds. Invited back
+after graduating as a guest speaker and mentor for new participants.
+
+### Consultant, Software Engineer — Zaizi
+
+*August 2017 – February 2018 · London*
+
+- Built a geo-replicated distributed storage platform on AWS (EC2 + EBS +
+  GlusterFS), giving 3,600 active users scalable, fault-tolerant, cross-region
+  access to 4.6 TB of unstructured data (14M documents).
+- Replaced a manual Excel + PowerShell workflow with a Python pipeline that
+  extracted, transformed and validated CSV data, cutting runtime from two days to
+  two hours (~£100k annual saving).
+
+### Lead Software Engineer — Heka
+
+*May 2017 – August 2017 · London*
+
+- Led a five-engineer team building a sports marketplace (Java microservices +
+  AngularJS).
+- Migrated legacy infrastructure from DigitalOcean to GCP App Engine, cutting build
+  time from six hours to ten minutes.
+
+### Software Developer — East City Films
+
+*February 2017 – April 2017 · London*
+
+Built a VR 360° video player with in-headset menu navigation.
+
+## Education
+
+| | |
+|---|---|
+| **The Machine Learning Institute** | Level 5 Digital Skills Bootcamp, Machine Learning |
+| **Amazon Web Services** | Level 3 Digital Skills Bootcamp, Cloud Computing |
+| **University of Plymouth** | BSc, Computer Science |
+| **Corndel** | Level 5 Apprenticeship, Leadership and Management |
+| **Generation UK & Ireland** | Cloud Support Program |
+
+## Certifications & clearance
+
+12 AWS certifications, including AWS Certified Solutions Architect – Associate, and
+AWS Partner: Accreditation (Technical). SC cleared.
