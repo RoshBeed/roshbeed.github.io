@@ -1,0 +1,14 @@
+/* Slightly narrower measure than Cosmo's default — long-form text reads better. */
+main {
+  max-width: 46rem;
+}
+
+.quarto-title-block .subtitle {
+  font-weight: 400;
+  color: #5b6570;
+}
+
+/* Figures are the point of this site; give them room to breathe. */
+figure {
+  margin-block: 2rem;
+}

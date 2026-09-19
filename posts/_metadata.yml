@@ -1,0 +1,27 @@
+# Shared options for every post.
+author: "Rosh Beed"
+toc: true
+
+execute:
+  # .ipynb posts are NOT executed by default — Quarto reuses whatever outputs are
+  # stored in the notebook. Turning execution on is what makes the figures a
+  # product of the locked environment rather than a committed artifact.
+  enabled: true
+  # No freeze. Every build re-executes, so a stale cache can never ship.
+  #
+  # A freeze cache would make builds faster, and it cannot be used here: Quarto
+  # keys it on the md5 of the notebook *including its outputs*, and nbstripout
+  # removes those on the way into git, so the committed notebook never matches.
+  # Actions minutes are free on a public repo, so there is nothing to buy with
+  # the complexity.
+  freeze: false
+  # Readers see output with the code folded away, so a stray library warning
+  # arrives as an unexplained stack trace in the middle of the prose.
+  warning: false
+
+format:
+  html:
+    # Code is part of the argument in these posts, so it ships with them -- but
+    # folded, so the prose reads without scrolling past a training loop.
+    code-fold: true
+    code-summary: "Show the code"

@@ -1,0 +1,12 @@
+---
+title: "Blog"
+subtitle: "Notes on the systems I build, with the figures executed at build time."
+toc: false
+listing:
+  contents: posts
+  type: default
+  sort: "date desc"
+  categories: true
+  feed: true
+  fields: [date, title, description, categories, reading-time]
+---

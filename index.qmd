@@ -1,0 +1,32 @@
+---
+title: "Rosh Beed"
+subtitle: "Machine learning & AI solutions engineer — London"
+toc: false
+listing:
+  id: recent-posts
+  contents: posts
+  type: default
+  sort: "date desc"
+  max-items: 3
+  fields: [date, title, description]
+---
+
+I work out what's actually possible for a customer, what's actually feasible, and
+then build the small proof of concept that shows them it works. That has taken me
+into a fairly awkward set of environments: Kubernetes deployed onto a submarine,
+air-gapped because there is no bandwidth underwater; a border control platform
+supported from a secure room during the rollout of a 4,000-node cluster; gene
+therapy pipelines demoed straight back to the customer.
+
+Lately that work is machine learning — a multi-agent platform for drug discovery,
+and fine-tuning Google's MedGemma to write radiology reports from breast scans it
+had never seen.
+
+SC cleared. 12 AWS certifications. Based in London.
+
+[Read the CV](cv.qmd){.btn .btn-primary} [Book 15 minutes](https://cal.com/rosh-beed/15min){.btn .btn-outline-secondary}
+
+## Recent writing
+
+::: {#recent-posts}
+:::
