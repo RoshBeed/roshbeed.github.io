@@ -1,0 +1,26 @@
+
+__pycache__/
+_site/
+!.env.example
+.DS_Store
+.env
+.env.*
+.quarto/
+.venv/
+*.pyc
+**/*.quarto_ipynb
+/_site/
+/.quarto/
+/*.png
+# Environment / secrets
+# Python
+# Quarto
+# scripts run from the repo root drop their figures here
+# Source CV — not published; see README.
+cv.pdf
+
+# Quarto's execution cache; not used, see posts/_metadata.yml
+/_freeze/
+
+# Figures are pulled from the Hub at render time, never committed
+posts/*/figures/
