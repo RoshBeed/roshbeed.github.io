@@ -10,3 +10,8 @@ listing:
   feed: true
   fields: [date, title, description, categories, reading-time]
 ---
+
+Most of these follow one thread, six weeks of building a machine learning system a
+week from scratch. They are listed newest first, so if you want them in order,
+[start with word2vec](posts/2026-06-08-word2vec-from-scratch/). The two deep dives
+at the top stand on their own.
