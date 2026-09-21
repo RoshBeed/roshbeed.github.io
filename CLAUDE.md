@@ -74,14 +74,26 @@ It fires on `git add`. It is local config, so a fresh clone must run
 posts/<date>-<slug>/index.ipynb    the post, and nothing else
 
 posts/_metadata.yml   options every post shares
-posts/_style.py       chart styling, so figures across posts match
-posts/_arch.py        visualtorch, configured once
 tools/fetch_figures.py  pulls figures from the Hub before rendering
+tools/check_isolation.py  fails the build if a post imports a sibling
 _site/                the built site, gitignored
 ```
 
-Quarto ignores files starting with an underscore, so `_style.py` and `_arch.py`
-are importable helpers rather than posts.
+## Every notebook stands on its own
+
+A post imports nothing from the repo. There is no `posts/_style.py`, no
+`_arch.py`: the chart palette, the visualtorch settings, the log-mel front end
+and the block-diagram code are pasted into a folded setup cell at the top of
+each notebook that needs them. Lift one `.ipynb` out of the repo and it runs.
+
+That is a deliberate trade and the cost is real. The chart styling exists eleven
+times and the mel filterbank twice, so a fix has to be applied to each copy.
+Those two copies drifted apart once already, and the stale one rounded its
+triangle corners to whole FFT bins, which leaves four mel bands empty and paints
+black stripes across the spectrogram. If you change one, change the others.
+
+`tools/check_isolation.py` runs from `pre-render` and fails the build if a
+notebook grows a `sys.path` insert or a `from _something import`.
 
 ## Figures
 
