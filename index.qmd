@@ -8,7 +8,7 @@ listing:
   type: default
   sort: "date desc"
   max-items: 3
-  fields: [date, title, description]
+  fields: [image, date, title, description]
 ---
 
 I work out what's actually possible for a customer, what's actually feasible, and

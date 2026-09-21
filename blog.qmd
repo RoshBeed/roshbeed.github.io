@@ -8,7 +8,7 @@ listing:
   sort: "date desc"
   categories: true
   feed: true
-  fields: [date, title, description, categories, reading-time]
+  fields: [image, date, title, description, categories, reading-time]
 ---
 
 Most of these follow one thread, six weeks of building a machine learning system a

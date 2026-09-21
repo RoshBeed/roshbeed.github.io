@@ -56,8 +56,9 @@ number in the prose.
 Corpora, measurements and dataset slices live in the
 `roshbeed/ai-residency-blog-data` dataset on the Hub and are pulled at render
 time, pinned to a commit. A clone is ephemeral: it works on a laptop or a runner
-with nothing cached. Figures a post displays are the exception — they are
-presentation, and they are committed.
+with nothing cached. That includes the figures a post displays:
+`posts/*/figures/` is gitignored, and `tools/fetch_figures.py` fills it from the
+same dataset before every render.
 
 ## Notebook outputs never reach git
 
