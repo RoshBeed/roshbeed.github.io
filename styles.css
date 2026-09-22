@@ -12,3 +12,27 @@ main {
 figure {
   margin-block: 2rem;
 }
+
+/* Credly badges on the CV. auto-fill lets the browser pick the column count from
+   the available width, so the grid reflows from six across on a laptop to three
+   on a phone with no breakpoints. */
+.badges {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+
+/* Twelve badges, so six across reads as two even rows rather than a ragged
+   last line. Pinned rather than left to auto-fill, which lands on six or seven
+   depending on how wide the theme happens to make the column. Below this the
+   rule above takes over and the browser picks the count. */
+@media (min-width: 700px) {
+  .badges { grid-template-columns: repeat(6, 1fr); }
+}
+
+.badges img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

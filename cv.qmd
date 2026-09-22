@@ -160,13 +160,23 @@ Built a VR 360° video player with in-headset menu navigation.
 
 | | |
 |---|---|
-| **The Machine Learning Institute** | Level 5 Digital Skills Bootcamp, Machine Learning |
-| **Amazon Web Services** | Level 3 Digital Skills Bootcamp, Cloud Computing |
 | **University of Plymouth** | BSc, Computer Science |
-| **Corndel** | Level 5 Apprenticeship, Leadership and Management |
-| **Generation UK & Ireland** | Cloud Support Program |
 
-## Certifications & clearance
+## Certifications
 
-12 AWS certifications, including AWS Certified Solutions Architect – Associate, and
-AWS Partner: Accreditation (Technical). SC cleared.
+```{=html}
+<div class="badges">
+  <a href="https://www.credly.com/badges/e87f2f88-09dd-4bc5-a68f-6f4c35bd86b0"><img src="https://images.credly.com/size/220x220/images/2d84e428-9078-49b6-a804-13c15383d0de/image.png" alt="AWS Certified Solutions Architect – Professional" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/2a4de46b-5708-41ed-ac9e-5b0dc1d0a0c1"><img src="https://images.credly.com/size/220x220/images/bd31ef42-d460-493e-8503-39592aaf0458/image.png" alt="AWS Certified DevOps Engineer – Professional" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/024d1e63-69e7-4cc6-9b62-30bdd8163153"><img src="https://images.credly.com/size/220x220/images/4d08274f-64c1-495e-986b-3143f51b1371/image.png" alt="AWS Certified Advanced Networking – Specialty" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/c90c9fbf-0b0c-4faa-8e25-6fcb97e5a37e"><img src="https://images.credly.com/size/220x220/images/778bde6c-ad1c-4312-ac33-2fa40d50a147/image.png" alt="AWS Certified Machine Learning – Specialty" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/cb0ef68f-3f7f-4521-af4c-f79a4820db6e"><img src="https://images.credly.com/size/220x220/images/53acdae5-d69f-4dda-b650-d02ed7a50dd7/image.png" alt="AWS Certified Security – Specialty" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/a081056b-d304-4966-9795-2d7fac72b15a"><img src="https://images.credly.com/size/220x220/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png" alt="AWS Certified Solutions Architect – Associate" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/a8fd204c-4363-46f6-9bd2-9e474c3d17e5"><img src="https://images.credly.com/size/220x220/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png" alt="AWS Certified Developer – Associate" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/8b0eac44-37df-43c9-883b-4d86c6c91075"><img src="https://images.credly.com/size/220x220/images/f0d3fbb9-bfa7-4017-9989-7bde8eaf42b1/image.png" alt="AWS Certified SysOps Administrator – Associate" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/be90c41a-269e-4438-a2ea-6e2227c9bddb"><img src="https://images.credly.com/size/220x220/images/e5c85d7f-4e50-431e-b5af-fa9d9b0596e7/image.png" alt="AWS Certified Data Engineer – Associate" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/1b893bcd-ac58-4abf-a818-3aef831f499d"><img src="https://images.credly.com/size/220x220/images/1a634b4e-3d6b-4a74-b118-c0dcb429e8d2/image.png" alt="AWS Certified Machine Learning Engineer – Associate" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/46a073f4-f72c-4c38-b020-3e34ea14dcf5"><img src="https://images.credly.com/size/220x220/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png" alt="AWS Certified AI Practitioner" width="220" height="220" loading="lazy"></a>
+  <a href="https://www.credly.com/badges/b1ea707a-af75-4c52-9ffe-ff31e327817e"><img src="https://images.credly.com/size/220x220/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS Certified Cloud Practitioner" width="220" height="220" loading="lazy"></a>
+</div>
+```
