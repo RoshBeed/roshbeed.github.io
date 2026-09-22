@@ -1,55 +1,75 @@
 # roshbeed.com — working notes
 
-Quarto site, published to GitHub Pages by Actions on every push to `main`.
+Quarto site. Posts are rendered here, on a laptop; Actions publishes what was
+committed and never executes a notebook.
 
 ```sh
 uv sync                                  # create .venv from the lockfile
-uv run nbstripout --install              # once per clone, see below
+git config diff.ipynb.textconv \
+  "$PWD/.venv/bin/python -m nbstripout -t"   # once per clone, see below
 export QUARTO_PYTHON="$PWD/.venv/bin/python"
 quarto preview                           # live reload while writing
-quarto render                            # one-shot build into _site/
+quarto render                            # build _site/ from stored outputs
+
+python tools/execute_posts.py            # run every post, save its outputs
+python tools/execute_posts.py rlhf       # just the posts matching "rlhf"
+python tools/check_outputs.py            # what CI checks before publishing
 ```
 
-## Posts are notebooks, executed at build time
+Quarto never runs a post. `execute_posts.py` does, and writes the outputs into
+the notebook; `quarto render` then publishes whatever it finds there.
 
-`posts/_metadata.yml` sets `execute: enabled: true`, which is not Quarto's default
-for `.ipynb` — left alone it reuses whatever outputs are stored in the notebook.
-Executing is the point: a figure is then the output of the code beside it, never a
-committed artifact that drifted.
+## Posts are executed while they are written, not at build time
 
-That guarantee needs a fixed environment, so Quarto is pinned in the workflow,
-Python in `.python-version`, packages in `uv.lock` via `uv sync --locked`, and
-every dataset a post pulls is pinned to a Hugging Face commit revision.
+Quarto does not execute `.ipynb` posts. It reuses the outputs stored in the
+notebook, and those outputs are committed. Running a post is part of writing it.
 
-There is no freeze cache. Every build runs every post, which takes about twenty
-minutes and costs nothing on a public repo. Do not add one: Quarto keys it on the
-md5 of the notebook *including its outputs*, which nbstripout strips on the way
-into git, so the committed notebook never matches and CI re-executes anyway.
+So `quarto render` builds the site in seconds and needs no torch. Producing the
+outputs is a separate step: `tools/execute_posts.py` runs each notebook in place
+with nbclient, from the post's own directory, which is what a notebook opened in
+Jupyter would see. Running a post in Jupyter and saving does the same thing.
 
-## The prose may not restate a number the build computes
+Re-run a post when it changes, and every post after a dependency bump.
 
-A post is re-executed on every build, and the build that readers see runs on a
-GitHub runner, not on my laptop. Two things follow.
+This replaced a build that executed all eleven posts on a GitHub runner. That
+took about twenty minutes, trained models on CI hardware to draw figures, and
+answered differently from the laptop often enough to make the prose unreliable.
 
-Torch's multithreaded CPU reductions add floats in whatever order the threads
-finish in, so the same seed gives different answers run to run. Over a training
-loop that compounds: a PPO sweep came out with a different policy each render, and
-the prose asserting what it settled on was wrong about half the time. Every post
-that imports torch calls `torch.set_num_threads(1)` for this reason.
+The cost is real and worth stating: a figure is no longer a product of the
+locked environment by construction. It is a product of whichever machine last
+ran the notebook. `uv.lock` and `.python-version` still pin that machine, and
+every dataset a post pulls is still pinned to a Hugging Face commit revision,
+but nothing enforces that the person rendering used them.
 
-That fixes a run on one machine and cannot fix it across two. The runner is
-x86-64 and this laptop is arm64, and the same code gives 0.842 here and 0.926
-there — 13 of 47 outputs differed when I checked. So prose states what is stable
-and the output carries the digits: "naming most of them", not "naming five in
-six". Counts that come from data rather than training — tokens, parameters, a
-chance baseline — are exact and safe to quote.
+`tools/check_outputs.py` covers the one failure mode this introduces. A notebook
+committed with its outputs cleared renders as prose wrapped around empty code
+blocks, and nothing about the build looks wrong. It runs in CI and fails on a
+post whose cells were never run, or that ends in a traceback.
 
-Where a comparison is the point, make it stable rather than quoting one run of it.
-The emotion post reports three seeds with the spread beside the mean, which is
-what showed the two designs it compares do not actually separate.
+There is no freeze cache and no use for one. Nothing executes at render time, so
+there is no execution to cache.
 
-After a push, diff the live outputs against the local ones before trusting any
-number in the prose.
+## The prose may quote what the notebook computed
+
+A number in the prose and the output beside it now come from the same run, so
+they cannot disagree. That was the main thing wrong with building on a runner:
+it is x86-64 and this laptop is arm64, the same code gave 0.842 here and 0.926
+there, and 13 of 47 outputs differed when I checked. Prose had to hedge around
+its own figures, saying "naming most of them" rather than "naming five in six".
+
+Two habits survive, because a re-run still has to agree with the run before it.
+
+Every post that imports torch calls `torch.set_num_threads(1)`. Multithreaded
+CPU reductions add floats in whatever order the threads finish in, so the same
+seed gives different answers run to run, and over a training loop that compounds
+until a PPO sweep settles on a different policy each time.
+
+Where a comparison is the point, make it stable rather than quoting one run of
+it. The emotion post reports three seeds with the spread beside the mean, which
+is what showed the two designs it compares do not actually separate.
+
+Re-running a post rewrites every number it produced. Read the prose against the
+new outputs before committing them.
 
 ## The repo holds no data
 
@@ -60,13 +80,19 @@ with nothing cached. That includes the figures a post displays:
 `posts/*/figures/` is gitignored, and `tools/fetch_figures.py` fills it from the
 same dataset before every render.
 
-## Notebook outputs never reach git
+## Notebook outputs are the published artifact
 
-Rendering writes outputs back into the `.ipynb`, which would turn a one-line prose
-edit into a diff of base64 PNGs. nbstripout runs as a git clean filter, so the
-notebook on disk keeps its outputs for Jupyter while the committed copy has none.
-It fires on `git add`. It is local config, so a fresh clone must run
-`uv run nbstripout --install`.
+Outputs are committed. nbstripout used to run as a git clean filter, and that is
+what forced CI to execute: the committed notebook carried no outputs, so a fresh
+run was the only thing left to publish. The filter is gone.
+
+nbstripout stays installed for one job. `.gitattributes` keeps `*.ipynb
+diff=ipynb`, pointed at `nbstripout -t` as a diff textconv, so `git diff` shows
+the code that changed without the base64 PNGs underneath it. The committed file
+keeps its outputs; only the diff view drops them.
+
+That textconv is local config, so a fresh clone needs the `git config` line
+above. Do not run `nbstripout --install` — it restores the clean filter.
 
 ## Layout
 
@@ -76,6 +102,8 @@ posts/<date>-<slug>/index.ipynb    the post, and nothing else
 posts/_metadata.yml   options every post shares
 tools/fetch_figures.py  pulls figures from the Hub before rendering
 tools/check_isolation.py  fails the build if a post imports a sibling
+tools/check_outputs.py  fails CI on a post committed without its outputs
+tools/execute_posts.py  runs the posts and saves their outputs in place
 _site/                the built site, gitignored
 ```
 

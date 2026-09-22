@@ -3,23 +3,38 @@ name = "roshbeed-site"
 version = "0.1.0"
 description = "roshbeed.com — Quarto site"
 requires-python = "==3.13.*"
-# Exact versions live in uv.lock; CI installs with `uv sync --locked` so a
-# library upgrade can never silently change a rendered figure.
+# Render-time dependencies only: what the pre-render tools in tools/ import.
+# Nothing here executes a notebook, so CI installs just this and skips the
+# torch stack entirely (`uv sync --locked --no-default-groups`).
 dependencies = [
     "huggingface-hub>=1.32.0",
+]
+
+[dependency-groups]
+# What a notebook needs to run. Only ever installed on a laptop: posts are
+# executed while they are written, and the outputs are committed with them.
+notebooks = [
     "ipykernel",
     "matplotlib",
     "nbclient",
     "nbformat",
     "numpy",
-    "pyyaml>=6.0.3",
     "torch>=2.14.0",
     "visualtorch>=1.4.1",
 ]
+dev = [
+    # Kept for `nbstripout -t`, the diff textconv. It is no longer a clean
+    # filter: outputs belong in the committed notebook now. See CLAUDE.md.
+    "nbstripout>=0.9.1",
+]
+
+[tool.uv]
+# A plain `uv sync` on a laptop gets everything needed to write and run a post.
+default-groups = ["dev", "notebooks"]
 
 # torch comes from the CPU wheel index. The default PyPI wheel bundles CUDA —
 # 43 nvidia-* packages and several gigabytes — for toys that only ever run on a
-# GitHub runner's CPU. Same pin the residency repo uses.
+# CPU. Same pin the residency repo uses.
 [tool.uv.sources]
 torch = [{ index = "pytorch-cpu" }]
 
@@ -27,8 +42,3 @@ torch = [{ index = "pytorch-cpu" }]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
 explicit = true
-
-[dependency-groups]
-dev = [
-    "nbstripout>=0.9.1",
-]

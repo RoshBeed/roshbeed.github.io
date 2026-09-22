@@ -3,18 +3,17 @@ author: "Rosh Beed"
 toc: true
 
 execute:
-  # .ipynb posts are NOT executed by default — Quarto reuses whatever outputs are
-  # stored in the notebook. Turning execution on is what makes the figures a
-  # product of the locked environment rather than a committed artifact.
-  enabled: true
-  # No freeze. Every build re-executes, so a stale cache can never ship.
+  # Quarto's own default for .ipynb, stated here so it is not mistaken for an
+  # oversight: a post is NOT executed at render time. It reuses the outputs
+  # stored in the notebook, which are the ones produced on the machine where the
+  # post was written.
   #
-  # A freeze cache would make builds faster, and it cannot be used here: Quarto
-  # keys it on the md5 of the notebook *including its outputs*, and nbstripout
-  # removes those on the way into git, so the committed notebook never matches.
-  # Actions minutes are free on a public repo, so there is nothing to buy with
-  # the complexity.
-  freeze: false
+  # Those outputs are committed. Running a post is part of writing it, not part
+  # of publishing it -- several of these train a model, and a build that trains
+  # is a twenty-minute build that can also come out different on a different
+  # CPU. `quarto render --execute` re-runs everything when that is what you
+  # want; see CLAUDE.md.
+  enabled: false
   # Readers see output with the code folded away, so a stray library warning
   # arrives as an unexplained stack trace in the middle of the prose.
   warning: false

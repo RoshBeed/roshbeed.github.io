@@ -19,7 +19,9 @@ _site/
 # Source CV — not published; see README.
 cv.pdf
 
-# Quarto's execution cache; not used, see posts/_metadata.yml
+# Quarto's execution cache. Nothing writes it: posts are not executed at render
+# time, so there is no execution to cache. Ignored so a stray `--execute` run
+# cannot commit one.
 /_freeze/
 
 # Figures are pulled from the Hub at render time, never committed

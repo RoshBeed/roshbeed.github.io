@@ -1,3 +1,5 @@
-*.ipynb filter=nbstripout
-*.zpln filter=nbstripout
+# Notebook outputs are committed: they are what the site publishes. nbstripout
+# stays on only as a diff textconv, so `git diff` shows the code that changed
+# without the base64 PNGs underneath it. It is NOT a clean filter -- stripping
+# on the way into git is what used to force CI to re-execute every post.
 *.ipynb diff=ipynb

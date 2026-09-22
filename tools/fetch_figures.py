@@ -15,7 +15,7 @@ from pathlib import Path
 from huggingface_hub import snapshot_download
 
 DATASET = "roshbeed/ai-residency-blog-data"
-REVISION = "aec33ba7b93c5d508a7808960d88ee4be47f8da5"
+REVISION = "99e231d8cc966b4c279df94c376f50e1910087e0"
 ROOT = Path(__file__).resolve().parent.parent
 
 

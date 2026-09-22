@@ -3,6 +3,7 @@ name: Publish
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -10,10 +11,12 @@ permissions:
   pages: write
   id-token: write
 
-# One deployment at a time; never cancel one mid-flight.
+# One Pages deployment at a time, never cancelled mid-flight. Pull requests are
+# checked rather than deployed, so they get their own group and the newest push
+# wins.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -21,10 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Everything that can change a rendered figure is pinned: the Quarto
-      # version here, the Python version in .python-version, and the exact
-      # package versions in uv.lock (installed by `uv sync --locked`, which
-      # fails rather than silently re-resolving).
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: 1.10.18
@@ -33,18 +32,31 @@ jobs:
         with:
           enable-cache: true
 
-      - run: uv sync --locked
+      # Render-time dependencies only -- the two pre-render tools. The torch
+      # stack lives in the `notebooks` group and is never installed here,
+      # because nothing in CI executes a notebook.
+      - run: uv sync --locked --no-default-groups
 
-      - run: quarto render
+      # A post ships the outputs stored in its .ipynb. One committed with its
+      # outputs cleared renders as prose around empty code blocks and looks
+      # entirely healthy, so it is caught here instead.
+      - run: .venv/bin/python tools/check_outputs.py
+
+      # --no-execute is redundant with posts/_metadata.yml and deliberate: it
+      # makes "CI does not train models" a property of the workflow rather than
+      # of a line someone could flip in a YAML file.
+      - run: quarto render --no-execute
         env:
           QUARTO_PYTHON: .venv/bin/python
 
       - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main'
         with:
           path: _site
 
   deploy:
     needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     environment:
       name: github-pages

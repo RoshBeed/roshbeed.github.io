@@ -1,6 +1,6 @@
 ---
 title: "Blog"
-subtitle: "Notes on the systems I build, with the figures executed at build time."
+subtitle: "Notes on the systems I build, with the figures produced by the code beside them."
 toc: false
 listing:
   contents: posts
