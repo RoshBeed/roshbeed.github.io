@@ -10,7 +10,7 @@ relative path.
 
     python tools/execute_posts.py                  # every post
     python tools/execute_posts.py superposition    # posts matching a substring
-    python tools/execute_posts.py --timeout 7200   # a post that trains for a while
+    python tools/execute_posts.py --timeout 7200   # tighten the cap for one run
 
 Several of these train a model, so the full run is long by design. That is the
 trade: it happens once, here, rather than on every build.
@@ -23,7 +23,7 @@ from pathlib import Path
 
 import nbformat
 from nbclient import NotebookClient
-from nbclient.exceptions import CellExecutionError
+from nbclient.exceptions import CellExecutionError, CellTimeoutError
 
 POSTS = Path(__file__).resolve().parent.parent / "posts"
 
@@ -40,8 +40,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("match", nargs="?", default="",
                         help="only run posts whose folder contains this")
-    parser.add_argument("--timeout", type=int, default=3600,
-                        help="per-cell timeout in seconds (default: 3600)")
+    # A post trains the model it describes, so one cell legitimately runs for
+    # hours. The cap is here to catch a hang, not to bound normal work.
+    parser.add_argument("--timeout", type=int, default=6 * 3600,
+                        help="per-cell timeout in seconds (default: 6 hours)")
     arguments = parser.parse_args()
 
     notebooks = [n for n in sorted(POSTS.glob("*/index.ipynb"))
@@ -58,7 +60,7 @@ def main() -> None:
         start = time.monotonic()
         try:
             execute(notebook, arguments.timeout)
-        except CellExecutionError as error:
+        except (CellExecutionError, CellTimeoutError) as error:
             failed.append(post)
             print(f"FAILED {post} after {time.monotonic() - start:.0f}s", flush=True)
             print(f"  {str(error).strip().splitlines()[-1]}", file=sys.stderr)

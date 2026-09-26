@@ -21,6 +21,20 @@ notebooks = [
     "numpy",
     "torch>=2.14.0",
     "visualtorch>=1.4.1",
+    # The posts train at the same scale as the projects they describe, which
+    # means the real backbones (Whisper, CLIP, Qwen) and the real corpora.
+    "transformers>=4.40",
+    "torchaudio",
+    "torchvision",
+    "datasets>=2.19",
+    "accelerate>=0.25",
+    "librosa",
+    "pillow",
+    "pandas>=2.2",
+    "pyarrow>=18.0",
+    "scikit-learn>=1.7",
+    "scipy>=1.14",
+    "tqdm",
 ]
 dev = [
     # Kept for `nbstripout -t`, the diff textconv. It is no longer a clean
@@ -37,6 +51,8 @@ default-groups = ["dev", "notebooks"]
 # CPU. Same pin the residency repo uses.
 [tool.uv.sources]
 torch = [{ index = "pytorch-cpu" }]
+torchaudio = [{ index = "pytorch-cpu" }]
+torchvision = [{ index = "pytorch-cpu" }]
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
