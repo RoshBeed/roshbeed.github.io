@@ -1,0 +1,66 @@
+name: Publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One Pages deployment at a time, never cancelled mid-flight. Pull requests are
+# checked rather than deployed, so they get their own group and the newest push
+# wins.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.10.18
+
+      - uses: astral-sh/setup-uv@v10.1.0
+        with:
+          enable-cache: true
+
+      # Render-time dependencies only -- the two pre-render tools. The torch
+      # stack lives in the `notebooks` group and is never installed here,
+      # because nothing in CI executes a notebook.
+      - run: uv sync --locked --no-default-groups
+
+      # A post ships the outputs stored in its .ipynb. One committed with its
+      # outputs cleared renders as prose around empty code blocks and looks
+      # entirely healthy, so it is caught here instead.
+      - run: .venv/bin/python tools/check_outputs.py
+
+      # --no-execute is redundant with posts/_metadata.yml and deliberate: it
+      # makes "CI does not train models" a property of the workflow rather than
+      # of a line someone could flip in a YAML file.
+      - run: quarto render --no-execute
+        env:
+          QUARTO_PYTHON: .venv/bin/python
+
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

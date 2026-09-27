@@ -1,0 +1,26 @@
+# Shared options for every post.
+author: "Rosh Beed"
+toc: true
+
+execute:
+  # Quarto's own default for .ipynb, stated here so it is not mistaken for an
+  # oversight: a post is NOT executed at render time. It reuses the outputs
+  # stored in the notebook, which are the ones produced on the machine where the
+  # post was written.
+  #
+  # Those outputs are committed. Running a post is part of writing it, not part
+  # of publishing it -- several of these train a model, and a build that trains
+  # is a twenty-minute build that can also come out different on a different
+  # CPU. `quarto render --execute` re-runs everything when that is what you
+  # want; see CLAUDE.md.
+  enabled: false
+  # Readers see output with the code folded away, so a stray library warning
+  # arrives as an unexplained stack trace in the middle of the prose.
+  warning: false
+
+format:
+  html:
+    # Code is part of the argument in these posts, so it ships with them -- but
+    # folded, so the prose reads without scrolling past a training loop.
+    code-fold: true
+    code-summary: "Show the code"

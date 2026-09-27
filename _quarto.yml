@@ -1,0 +1,31 @@
+project:
+  type: website
+  output-dir: _site
+  pre-render:
+    - tools/check_isolation.py
+
+website:
+  title: "Rosh Beed"
+  description: "Machine learning and AI solutions engineer, London."
+  site-url: https://roshbeed.com
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: blog.qmd
+        text: Blog
+      - href: cv.qmd
+        text: CV
+    right:
+      - icon: github
+        href: https://github.com/RoshBeed
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/roshbeed
+        aria-label: LinkedIn
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

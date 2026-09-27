@@ -1,0 +1,25 @@
+
+__pycache__/
+_site/
+!.env.example
+.DS_Store
+.env
+.env.*
+.quarto/
+.venv/
+*.pyc
+**/*.quarto_ipynb
+/_site/
+/.quarto/
+/*.png
+# Environment / secrets
+# Python
+# Quarto
+# scripts run from the repo root drop their figures here
+# Source CV — not published; see README.
+cv.pdf
+
+# Quarto's execution cache. Nothing writes it: posts are not executed at render
+# time, so there is no execution to cache. Ignored so a stray `--execute` run
+# cannot commit one.
+/_freeze/

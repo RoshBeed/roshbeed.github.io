@@ -1,0 +1,60 @@
+[project]
+name = "roshbeed-site"
+version = "0.1.0"
+description = "roshbeed.com — Quarto site"
+requires-python = "==3.13.*"
+# Render-time dependencies only: what the pre-render tools in tools/ import.
+# Nothing here executes a notebook, so CI installs just this and skips the
+# torch stack entirely (`uv sync --locked --no-default-groups`).
+dependencies = [
+    "huggingface-hub>=1.32.0",
+]
+
+[dependency-groups]
+# What a notebook needs to run. Only ever installed on a laptop: posts are
+# executed while they are written, and the outputs are committed with them.
+notebooks = [
+    "ipykernel",
+    "matplotlib",
+    "nbclient",
+    "nbformat",
+    "numpy",
+    "torch>=2.14.0",
+    "visualtorch>=1.4.1",
+    # The posts train at the same scale as the projects they describe, which
+    # means the real backbones (Whisper, CLIP, Qwen) and the real corpora.
+    "transformers>=4.40",
+    "torchaudio",
+    "torchvision",
+    "datasets>=2.19",
+    "accelerate>=0.25",
+    "librosa",
+    "pillow",
+    "pandas>=2.2",
+    "pyarrow>=18.0",
+    "scikit-learn>=1.7",
+    "scipy>=1.14",
+    "tqdm",
+]
+dev = [
+    # Kept for `nbstripout -t`, the diff textconv. It is no longer a clean
+    # filter: outputs belong in the committed notebook now. See CLAUDE.md.
+    "nbstripout>=0.9.1",
+]
+
+[tool.uv]
+# A plain `uv sync` on a laptop gets everything needed to write and run a post.
+default-groups = ["dev", "notebooks"]
+
+# torch comes from the CPU wheel index. The default PyPI wheel bundles CUDA —
+# 43 nvidia-* packages and several gigabytes — for toys that only ever run on a
+# CPU. Same pin the residency repo uses.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" }]
+torchaudio = [{ index = "pytorch-cpu" }]
+torchvision = [{ index = "pytorch-cpu" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
